@@ -79,17 +79,18 @@ jobs:
 
       - name: Get Quay Manifest
         id: get_quay_manifest
-        run: |
+        run: | # TODO: Change delltech/csm to our production repo
+          echo "Running from forked common-actions"
           SHA=$(curl -s --location --request GET 'https://quay.io/api/v1/repository/delltech/csm/${{ github.event.inputs.image }}/tag?specificTag=nightly' --header 'Content-Type: application/json' --header 'Authorization: Bearer ${{ secrets.QUAY_API_TOKEN }}' | jq -r '.tags[0].manifest_digest')
           echo "::set-output name=sha::$SHA"
 
       - name: Push Quay Manifest
         run: |
-          curl -s --location --request PUT 'https://quay.io/api/v1/repository/delltech/csm/${{ github.event.inputs.image }}/tag/${{ github.event.inputs.version }}' \
+          curl -s --location --request PUT 'https://quay.io/api/v1/repository/delltech/csm/${{ github.event.inputs.image }}/tag/v${{ github.event.inputs.version }}' \
           --header 'Content-Type: application/json' \
-          --header 'Authorization: Bearer '${{ secrets.QUAY_API_TOKEN }} \
+          --header 'Authorization: Bearer ${{ secrets.QUAY_API_TOKEN }}' \
           --data-raw '{
-          "manifest_digest": ${{ steps.get_quay_manifest.outputs.sha }}
+            "manifest_digest": "${{ steps.get_quay_manifest.outputs.sha }}"
           }'
 
 #  create-release:
