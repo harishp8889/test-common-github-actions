@@ -62,10 +62,10 @@ jobs:
   
       - name: Create new tag
         run: |
-          # git config --global user.name 'github-actions'
-          # git config --global user.email 'git@github-actions.com'
-          # git config --global user.signingkey ${{ secrets.GPG_KEY_ID }}
-          # git config --global commit.gpgSign true
+          git config --global user.name 'github-actions'
+          git config --global user.email 'git@github-actions.com'
+          git config --global user.signingkey ${{ secrets.GPG_KEY_ID }}
+          git config --global commit.gpgSign true
           git tag -s -a v${{ github.event.inputs.version }} -m "Release v${{ github.event.inputs.version }}"
           git push origin v${{ github.event.inputs.version }}
         env:
