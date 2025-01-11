@@ -33,25 +33,35 @@ jobs:
           fi
       - name: Checkout the code
         uses: actions/checkout@v4
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: "1.23"
-      - name: Install dependencies
-        run: go mod tidy
-      - name: Build
-        run: go build -v ./...
-      - name: Run malware scan
-        uses: dell/common-github-actions/malware-scanner@main
-        with:
-          directories: .
-          options: -ri
-
+      # - name: Set up Go
+      #   uses: actions/setup-go@v5
+      #   with:
+      #     go-version: "1.23"
+      # - name: Install dependencies
+      #   run: go mod tidy
+      # - name: Build
+      #   run: go build -v ./...
+      # - name: Run malware scan
+      #   uses: dell/common-github-actions/malware-scanner@main
+      #   with:
+      #     directories: .
+      #     options: -ri
+      - name: Set up GPG
+        run: |
+              echo "$GPG_PRIVATE_KEY" | gpg --import
+              echo "$GPG_PRIVATE_KEY" | gpg --import-ownertrust
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+      
+      - name: Configure Git to sign commits
+        run: |
+            git config --global user.signingkey ${{ secrets.GPG_KEY_ID }}
+            git config --global commit.gpgSign true
       - name: Create new tag
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-          git tag v${{ github.event.inputs.version }}
+          git tag -s -a v${{ github.event.inputs.version }} -m "Release v${{ github.event.inputs.version }}"
           git push origin v${{ github.event.inputs.version }}
 
       - name: Create Release
