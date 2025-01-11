@@ -61,7 +61,8 @@ jobs:
       - name: Create new tag
         run: |
           git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
+          git config --global user.signingkey git@github-actions.com
+          git config --global user.email 'git@github-actions.com'
           git tag -s -a v${{ github.event.inputs.version }} -m "Release v${{ github.event.inputs.version }}"
           git push origin v${{ github.event.inputs.version }}
 
