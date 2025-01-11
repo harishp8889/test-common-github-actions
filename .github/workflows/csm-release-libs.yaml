@@ -46,26 +46,26 @@ jobs:
       #   with:
       #     directories: .
       #     options: -ri
-      - name: Set up GPG
-        run: |
-          echo "$GPG_PRIVATE_KEY" | gpg --import
-          echo -e "trust\n4\ny\nsave\n" | gpg --batch --yes --command-fd 0 --edit-key git@github-actions.com
-        env:
-          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-      
-      - name: Configure Git to sign commits
-        run: |
-            git config --global user.signingkey ${{ secrets.GPG_KEY_ID }}
-            git config --global commit.gpgSign true
+      # - name: Set up GPG
+      #   run: |
+      #     echo "$GPG_PRIVATE_KEY" | gpg --import
+      #     echo -e "trust\n4\ny\nsave\n" | gpg --batch --yes --command-fd 0 --edit-key git@github-actions.com
+      #   env:
+      #     GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
 
       - name: Create new tag
         run: |
+          echo "$GPG_PRIVATE_KEY" | gpg --import
+          echo -e "trust\n4\ny\nsave\n" | gpg --batch --yes --command-fd 0 --edit-key git@github-actions.com
           git config --global user.name 'github-actions'
-          git config --global user.signingkey git@github-actions.com
           git config --global user.email 'git@github-actions.com'
+          git config --global user.signingkey ${{ secrets.GPG_KEY_ID }}
+          git config --global commit.gpgSign true
           git tag -s -a v${{ github.event.inputs.version }} -m "Release v${{ github.event.inputs.version }}"
           git push origin v${{ github.event.inputs.version }}
-
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          
       - name: Create Release
         id: release_notes
         uses: softprops/action-gh-release@v2
