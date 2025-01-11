@@ -48,8 +48,8 @@ jobs:
       #     options: -ri
       - name: Set up GPG
         run: |
-              echo "$GPG_PRIVATE_KEY" | gpg --import
-              echo "$GPG_PRIVATE_KEY" | gpg --import-ownertrust
+          echo "$GPG_PRIVATE_KEY" | gpg --import
+          gpg --batch --yes --edit-key git@github-actions.com trust quit
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
       
@@ -57,6 +57,7 @@ jobs:
         run: |
             git config --global user.signingkey ${{ secrets.GPG_KEY_ID }}
             git config --global commit.gpgSign true
+
       - name: Create new tag
         run: |
           git config --global user.name 'github-actions'
