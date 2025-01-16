@@ -1,4 +1,4 @@
-name: Release Go Client Libraries
+name: Create Tag and Release
 
 # Invocable as a reusable workflow
 on:
