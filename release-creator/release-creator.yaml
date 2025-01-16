@@ -1,5 +1,5 @@
 # Invocable as a reusable workflow
-name: Create Tag and Release
+name: 'Release Creator'
 description: This will create annotated tag and draft a release for the same
 inputs:
   version:
