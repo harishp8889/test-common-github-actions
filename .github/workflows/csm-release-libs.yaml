@@ -45,6 +45,6 @@ jobs:
           directories: .
           options: -ri
       - name : Create Tag and Release
-        uses: harishp8889/test-common-github-actions/.github/tag-creator.yaml
+        uses: harishp8889/test-common-github-actions/release-creator@main
         with:
           inputs: ${{ inputs.version}}
