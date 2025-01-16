@@ -1,14 +1,11 @@
-name: Create Tag and Release
-
 # Invocable as a reusable workflow
-on:
-  workflow_call:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Version to release (major, minor, patch), ex: 1.0.0'
-        required: true
-        type: string
+name: Create Tag and Release
+description: This will create annotated tag and draft a release for the same
+inputs:
+  version:
+    description: 'Version to release (major, minor, patch), ex: 1.0.0'
+    required: true
+    type: string
 
 jobs:
   build-and-scan:
@@ -45,4 +42,4 @@ jobs:
       - name: Create release branch
         run: |
           git checkout -b release/v${{ github.event.inputs.version }}
-          git push origin release/v${{ github.event.inputs.version }}      
+          git push origin release/v${{ github.event.inputs.version }}
