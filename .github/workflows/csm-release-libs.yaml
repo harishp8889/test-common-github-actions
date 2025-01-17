@@ -46,7 +46,7 @@ jobs:
           options: -ri
 
   release-and-tag:
-    name: Build, Scan and Release
+    name: Release and Tag
     runs-on: ubuntu-latest    
     steps:      
       - name : Tag and Release Creator
