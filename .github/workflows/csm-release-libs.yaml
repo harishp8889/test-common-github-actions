@@ -17,10 +17,10 @@ on:
       version:
         description: 'Version to release (major, minor, patch), ex: 1.0.0'
         required: true
-        type: string      
+        type: string
 jobs:
   build-and-scan:    
-    name: Build, Scan and Release
+    name: Build and Scan
     runs-on: ubuntu-latest    
     steps:
       - name: Validate version input
@@ -35,18 +35,18 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: "1.23"
-      # - name: Install dependencies
-      #   run: go mod tidy
-      # - name: Build
-      #   run: go build -v ./...
-      # - name: Run malware scan
-      #   uses: dell/common-github-actions/malware-scanner@main
-      #   with:
-      #     directories: .
-      #     options: -ri
+      - name: Install dependencies
+        run: go mod tidy
+      - name: Build
+        run: go build -v ./...
+      - name: Run malware scan
+        uses: dell/common-github-actions/malware-scanner@main
+        with:
+          directories: .
+          options: -ri
 
   release-and-tag:
-    name: Release and Tag    
+    name: Tag and Release
     needs: build-and-scan
     uses: harishp8889/test-common-github-actions/.github/workflows/release-creator.yaml@main
     with:
