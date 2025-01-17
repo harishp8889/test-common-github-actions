@@ -51,3 +51,4 @@ jobs:
     uses: harishp8889/test-common-github-actions/.github/workflows/release-creator.yaml@main
     with:
       version: ${{ github.event.inputs.version }}
+    secrets: inherit
