@@ -46,13 +46,8 @@ jobs:
       #     options: -ri
 
   release-and-tag:
-    name: Release and Tag
-    runs-on: ubuntu-latest
+    name: Release and Tag    
     needs: build-and-scan
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v4
-      - name : Tag and Release Creator
-        uses: harishp8889/test-common-github-actions/.github/workflows/release-creator.yaml@main
-        with:
-          inputs: ${{ inputs.version}}
+    uses: harishp8889/test-common-github-actions/.github/workflows/release-creator.yaml@main
+    with:
+      version: ${{ github.event.inputs.version }}
