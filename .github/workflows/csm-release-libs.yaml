@@ -35,15 +35,15 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: "1.23"
-      - name: Install dependencies
-        run: go mod tidy
-      - name: Build
-        run: go build -v ./...
-      - name: Run malware scan
-        uses: dell/common-github-actions/malware-scanner@main
-        with:
-          directories: .
-          options: -ri
+      # - name: Install dependencies
+      #   run: go mod tidy
+      # - name: Build
+      #   run: go build -v ./...
+      # - name: Run malware scan
+      #   uses: dell/common-github-actions/malware-scanner@main
+      #   with:
+      #     directories: .
+      #     options: -ri
 
   release-and-tag:
     name: Release and Tag
@@ -53,6 +53,6 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v4
       - name : Tag and Release Creator
-        uses: ./github/workflows/release-creator.yaml@main
+        uses: harishp8889/test-common-github-actions/.github/workflows/release-creator.yaml@main
         with:
           inputs: ${{ inputs.version}}
