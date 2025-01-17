@@ -50,6 +50,6 @@ jobs:
     runs-on: ubuntu-latest    
     steps:      
       - name : Tag and Release Creator
-        uses: harishp8889/test-common-github-actions/.githib/workflows/release-creator.yaml@main
+        uses: harishp8889/test-common-github-actions/.github/workflows/release-creator.yaml@main
         with:
           inputs: ${{ inputs.version}}
