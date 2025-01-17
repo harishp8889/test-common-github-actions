@@ -13,6 +13,8 @@ jobs:
     name: Create tag
     runs-on: ubuntu-latest    
     steps:
+        - name: Checkout the code
+          uses: actions/checkout@v4
         - name: Import GPG key
           uses: crazy-max/ghaction-import-gpg@v6
           with:
