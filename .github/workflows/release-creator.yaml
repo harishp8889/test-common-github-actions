@@ -10,7 +10,7 @@ on:
         type: string      
 jobs:
   tag-and-release: 
-    name: Create tag
+    name: Create tag and release
     runs-on: ubuntu-latest    
     steps:
         - name: Checkout the code
