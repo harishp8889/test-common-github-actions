@@ -47,8 +47,11 @@ jobs:
 
   release-and-tag:
     name: Release and Tag
-    runs-on: ubuntu-latest    
-    steps:      
+    runs-on: ubuntu-latest
+    needs: build-and-scan
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
       - name : Tag and Release Creator
         uses: ./github/workflows/release-creator.yaml@main
         with:
