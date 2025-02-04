@@ -137,10 +137,11 @@ jobs:
             # --data-raw '{
             #   "manifest_digest":"${SHA}"
             # }'
+            jsonvariable="{
+              "manifest_digest": "$SHA"
+            }"
             curl -s --location --request PUT 'https://quay.io/api/v1/repository/delltech/csm/$image/tag/latest' \
             --header 'Content-Type: application/json' \
             --header 'Authorization: Bearer ${{ secrets.QUAY_API_TOKEN }}' \
-            --data-raw '{
-              "manifest_digest": "'"$SHA"'"
-            }'
+            --data-raw '$jsonvariable'
           done
