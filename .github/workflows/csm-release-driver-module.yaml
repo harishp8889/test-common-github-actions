@@ -125,18 +125,18 @@ jobs:
             fi
            repository=''
            # Get manifest digest
-           SHA=$(curl -s --location --request GET 'https://quay.io/api/v1/repository/delltech/csm/$image/tag?specificTag=nightly' --header 'Content-Type: application/json' --header 'Authorization: Bearer ${{ secrets.QUAY_API_TOKEN }}' | jq -r '.tags[0].manifest_digest')
+           SHA=$(curl -s --location --request GET https://quay.io/api/v1/repository/delltech/csm/$image/tag?specificTag=nightly --header 'Content-Type: application/json' --header 'Authorization: Bearer ${{ secrets.QUAY_API_TOKEN }}' | jq -r '.tags[0].manifest_digest')
 
            echo "Pushing image: $image:$new_version"
 
            # Create version and latest tags
-           curl -s --location --request PUT 'https://quay.io/api/v1/repository/delltech/csm/$image/tag/$new_version' \
+           curl -s --location --request PUT https://quay.io/api/v1/repository/delltech/csm/$image/tag/$new_version \
            --header 'Content-Type: application/json' \
            --header 'Authorization: Bearer ${{ secrets.QUAY_API_TOKEN }}' \
            --data-raw '{
              "manifest_digest": "$SHA"
            }'
-           curl -s --location --request PUT 'https://quay.io/api/v1/repository/delltech/csm/$image/tag/latest' \
+           curl -s --location --request PUT https://quay.io/api/v1/repository/delltech/csm/$image/tag/latest \
            --header 'Content-Type: application/json' \
            --header 'Authorization: Bearer ${{ secrets.QUAY_API_TOKEN }}' \
            --data-raw '{
