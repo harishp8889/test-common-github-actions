@@ -98,7 +98,7 @@ jobs:
       #     done
 
       - name: Push images to Quay.io
-        shell: bash
+        # shell: bash
         run: |
           # Push each comma seperated images by splitting the string with ','
           images_list=$(echo '${{ inputs.images }}' | tr -d '[]"' | tr ',' ' ')
@@ -135,13 +135,13 @@ jobs:
             --header 'Content-Type: application/json' \
             --header 'Authorization: Bearer ${{ secrets.QUAY_API_TOKEN }}' \
             --data-raw '{
-              "manifest_digest": \"$SHA\"
+              \"manifest_digest\": \"$SHA\"
             }'
         
             curl -s --location --request PUT 'https://quay.io/api/v1/repository/delltech/csm/$image/tag/latest' \
             --header 'Content-Type: application/json' \
             --header 'Authorization: Bearer ${{ secrets.QUAY_API_TOKEN }}' \
             --data-raw '{
-                  "manifest_digest": \"$SHA\"
-              }'
+              \"manifest_digest\": \"$SHA\"
+            }'
           done
