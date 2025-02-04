@@ -143,5 +143,5 @@ jobs:
             curl -s --location --request PUT 'https://quay.io/api/v1/repository/delltech/csm/$image/tag/latest' \
             --header 'Content-Type: application/json' \
             --header 'Authorization: Bearer ${{ secrets.QUAY_API_TOKEN }}' \
-            --data-raw $jsonvariable
+            --data-raw '$jsonvariable'
           done
