@@ -141,6 +141,6 @@ jobs:
             --header 'Content-Type: application/json' \
             --header 'Authorization: Bearer ${{ secrets.QUAY_API_TOKEN }}' \
             --data-raw '{
-              "manifest_digest": "$SHA"
+              "manifest_digest": "'"$SHA"'"
             }'
           done
