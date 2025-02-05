@@ -101,7 +101,9 @@ jobs:
           prerelease: false
           generate_release_notes: true
           make_latest: true          
-          files: ${{ env.FILE_NAME }}
+          # files: ${{ env.FILE_NAME }}
+          files: |
+            $FILE_NAME
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REL_VERSION: ${{ env.REL_VERSION }}
