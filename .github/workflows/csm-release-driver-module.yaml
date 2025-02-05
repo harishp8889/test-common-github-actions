@@ -50,7 +50,7 @@ jobs:
               echo "BIN_NAME=repctl-linux-amd64" >> $GITHUB_ENV
           fi
       - name: Upload artifact
-        if: ${{env.BIN_NAME != ''}}
+        if: ${{ env.BIN_NAME != '' }}
         uses: actions/upload-artifact@v4.6.0
         env:
           BIN_NAME: ${{ env.BIN_NAME }}
