@@ -62,40 +62,41 @@ jobs:
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
-      # - name: Push images to Dockerhub
-      #   run: |
-      #     # Push each comma seperated images by splitting the string with ','
-      #     images_list=$(echo '${{ inputs.images }}' | tr -d '[]"' | tr ',' ' ')
-      #     for image in $images_list; do
+      - name: Push images to Dockerhub
+        shell: bash
+        run: |
+          # Push each comma seperated images by splitting the string with ','
+          images_list=$(echo '${{ inputs.images }}' | tr -d '[]"' | tr ',' ' ')
+          for image in $images_list; do
 
-      #       latest_version=$(curl -s https://registry.hub.docker.com/v2/repositories/dellemc/$image/tags | jq -r '.results[].name' | sort -V | tail -n 1)
-      #       echo "Current latest version of $image:$latest_version"
+            latest_version=$(curl -s https://registry.hub.docker.com/v2/repositories/dellemc/$image/tags | jq -r '.results[].name' | sort -V | tail -n 1)
+            echo "Current latest version of $image:$latest_version"
 
-      #       IFS='.' read -r -a version_parts <<< "$latest_version"
+            IFS='.' read -r -a version_parts <<< "$latest_version"
           
-      #       if "${{ inputs.version == 'major' }}"; then
-      #         # major version bump up
-      #         version_parts[0]=$(expr ${version_parts[0]} + 1)
-      #         new_version="${version_parts[0]}.0.0"
-      #       fi
-      #       if "${{ inputs.version == 'minor' }}"; then
-      #         # minor version bump up
-      #         version_parts[1]=$(expr ${version_parts[1]} + 1)
-      #         new_version="${version_parts[0]}.${version_parts[1]}.0"
-      #       fi
-      #       if "${{ inputs.version == 'patch' }}"; then
-      #         # patch version bump up
-      #         version_parts[2]=$(expr ${version_parts[2]} + 1)
-      #         new_version="${version_parts[0]}.${version_parts[1]}.${version_parts[2]}"
-      #       fi
+            if "${{ inputs.version == 'major' }}"; then
+              # major version bump up
+              version_parts[0]=$(expr ${version_parts[0]} + 1)
+              new_version="${version_parts[0]}.0.0"
+            fi
+            if "${{ inputs.version == 'minor' }}"; then
+              # minor version bump up
+              version_parts[1]=$(expr ${version_parts[1]} + 1)
+              new_version="${version_parts[0]}.${version_parts[1]}.0"
+            fi
+            if "${{ inputs.version == 'patch' }}"; then
+              # patch version bump up
+              version_parts[2]=$(expr ${version_parts[2]} + 1)
+              new_version="${version_parts[0]}.${version_parts[1]}.${version_parts[2]}"
+            fi
           
-      #      echo "Pushing image: $image:$new_version"                      
-      #      docker pull dellemc/$image:nightly
-      #      docker tag dellemc/$image:nightly dellemc/$image:$new_version
-      #      docker push dellemc/$image:$new_version
-      #      docker tag dellemc/$image:$new_version dellemc/$image:latest
-      #      docker push dellemc/$image:latest
-      #     done
+           echo "Pushing image: $image:$new_version"                      
+           docker pull dellemc/$image:nightly
+           docker tag dellemc/$image:nightly dellemc/$image:$new_version
+           docker push dellemc/$image:$new_version
+           docker tag dellemc/$image:$new_version dellemc/$image:latest
+           docker push dellemc/$image:latest
+          done
 
       - name: Push images to Quay.io
         shell: bash
@@ -103,7 +104,7 @@ jobs:
           # Push each comma seperated images by splitting the string with ','
           images_list=$(echo '${{ inputs.images }}' | tr -d '[]"' | tr ',' ' ')
           
-          REPOSITORY="delltech/csm"
+          REPOSITORY="dell/container-storage-modules"
 
           for image in $images_list; do
           
