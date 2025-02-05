@@ -86,9 +86,9 @@ jobs:
           pattern: -linux-amd64*
       - run: |
             ls -l
-            FILE_NAME="cert-csi-linux-amd64"
+            FILE_NAME="./cert-csi-linux-amd64"
             if [ -f "./repctl-linux-amd64" ]; then
-                FILE_NAME="repctl-linux-amd64"
+                FILE_NAME="./repctl-linux-amd64"
             fi
             echo "File name: $FILE_NAME"
             echo "FILE_NAME=$FILE_NAME" >> $GITHUB_ENV
