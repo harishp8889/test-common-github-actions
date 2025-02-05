@@ -82,8 +82,7 @@ jobs:
 
       - name: Download binary
         uses: actions/download-artifact@v4.1.8
-        with:
-          pattern: -linux-*
+        
       - run: |
             ls -l
             FILE=./cert-csi-linux-amd64
