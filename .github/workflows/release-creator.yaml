@@ -83,15 +83,15 @@ jobs:
       - name: Download binary
         uses: actions/download-artifact@v4.1.8
         with:
-          pattern: -linux-amd64*
+          pattern: -linux-*
       - run: |
             ls -l
-            FILE_NAME="./cert-csi-linux-amd64"
+            FILE=./cert-csi-linux-amd64
             if [ -f "./repctl-linux-amd64" ]; then
-                FILE_NAME="./repctl-linux-amd64"
+                FILE=./repctl-linux-amd64
             fi
-            echo "File name: $FILE_NAME"
-            echo "FILE_NAME=$FILE_NAME" >> $GITHUB_ENV
+            echo "File name: $FILE"
+            echo "FILE_NAME=$FILE" >> $GITHUB_ENV
     
       - name: Create Release
         uses: softprops/action-gh-release@v2
@@ -101,7 +101,7 @@ jobs:
           draft: true
           prerelease: false
           generate_release_notes: true
-          make_latest: true
+          make_latest: true          
           files: ${{ env.FILE_NAME }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
