@@ -83,7 +83,7 @@ jobs:
       - name: Download binary
         uses: actions/download-artifact@v4.1.8
 
-      - run: |
+      - run: |          
             ls -l
             FILE="./cert-csi-linux-amd64/cert-csi-linux-amd64"
             if [ -f "./repctl-linux-amd64" ]; then
@@ -91,6 +91,7 @@ jobs:
             fi
             echo "File name: $FILE"
             echo "FILE_NAME=$FILE" >> $GITHUB_ENV
+        shell: bash
     
       - name: Create Release
         uses: softprops/action-gh-release@v2
