@@ -52,7 +52,7 @@ jobs:
               mv repctl-linux-amd64 ../
               cd ..
               pwd
-              ls- l
+              ls -l
               echo "BIN_NAME=repctl-linux-amd64" >> $GITHUB_ENV
           fi
       - name: Upload artifact
