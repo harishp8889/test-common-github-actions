@@ -86,7 +86,7 @@ jobs:
       - run: |          
             ls -l
             FILE="./cert-csi-linux-amd64/cert-csi-linux-amd64"
-            if [ -f "./repctl-linux-amd64" ]; then
+            if [ -f "repctl-linux-amd64" ]; then
                 FILE="./repctl-linux-amd64/repctl-linux-amd64"
             fi
             echo "File name: $FILE"
