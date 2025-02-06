@@ -36,7 +36,8 @@ jobs:
           go-version: "1.23"
       - name: Install dependencies
         run: go mod tidy
-      - name: Build binaries        
+      - name: Build binaries
+        shell: bash
         run: |
           echo "Building binaries to attach to the release if any..."
           if "${{ inputs.images == 'cert-csi' }}"; then
@@ -44,9 +45,8 @@ jobs:
               mv cert-csi cert-csi-linux-amd64
               echo "BIN_NAME=cert-csi-linux-amd64" >> $GITHUB_ENV
           fi
-          if "${{ contains(inputs.images, 'dell-csi-replicator') || contains(inputs.images, 'dell-replication-controller') }}"; then
-              echo "--------came inside local job------"
-              cd repctl 
+          if "${{ contains(inputs.images, 'dell-csi-replicator') || contains(inputs.images, 'dell-replication-controller') }}"; then              
+              cd repctl
               make build
               mv repctl repctl-linux-amd64
               mv repctl-linux-amd64 ../
@@ -126,6 +126,7 @@ jobs:
           REPOSITORY="delltech/csm"
 
           for image in $images_list; do
+            echo "----image:$image"
           
             latest_version=$(curl -s https://quay.io/api/v1/repository/$REPOSITORY/$image/tag/?limit=100 | jq -r '.tags[].name' | sort -V | tail -n 1)
             echo "Current latest version of $image:$latest_version"
