@@ -45,10 +45,14 @@ jobs:
               echo "BIN_NAME=cert-csi-linux-amd64" >> $GITHUB_ENV
           fi
           if "${{ contains(inputs.images, 'dell-csi-replicator') || contains(inputs.images, 'dell-replication-controller') }}"; then
-              cd repctl && make build
-              mv repctl/repctl ../
-              ls -l
+              echo "--------came inside local job------"
+              cd repctl 
+              make build
               mv repctl repctl-linux-amd64
+              mv repctl-linux-amd64 ../
+              cd ..
+              pwd
+              ls- l
               echo "BIN_NAME=repctl-linux-amd64" >> $GITHUB_ENV
           fi
       - name: Upload artifact
@@ -70,7 +74,7 @@ jobs:
 
   push-images:
     name: Release images to Dockerhub and Quay
-    # needs: release-and-tag
+    needs: release-and-tag
     runs-on: ubuntu-latest
     steps:
       # - name: Log in to Docker Hub
@@ -116,6 +120,7 @@ jobs:
         shell: bash
         run: |
           # Push each comma seperated images by splitting the string with ','
+          echo '----images received---: ${{ inputs.images }}'
           images_list=$(echo '${{ inputs.images }}' | tr -d '[]"' | tr ',' ' ')
           
           REPOSITORY="delltech/csm"
