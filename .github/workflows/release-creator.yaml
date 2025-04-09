@@ -31,6 +31,8 @@ jobs:
       - name: Get latest tag
         id: get_tag
         uses: actions-ecosystem/action-get-latest-tag@v1
+        with:
+          semver_only: true
           
       - name: Use the latest tag
         run: | 
