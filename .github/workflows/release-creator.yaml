@@ -28,6 +28,14 @@ jobs:
           fetch-depth: 0 # Fetch the full history including tags
           ref: ${{ github.ref }} # Checkout the branch from which the workflow is triggered
 
+      - name: Get latest tag
+        id: get_tag
+        uses: actions-ecosystem/action-get-latest-tag@v1
+          
+      - name: Use the latest tag
+        run: | 
+            echo "Latest tag: ${{ steps.get_tag.outputs.tag }}"
+          
       # we will set the release version based on the user given input for older patch releases only ex: n-1, n-2
       - name: Set release version
         if: ${{ inputs.version != 'patch' || inputs.version != 'minor' || inputs.version != 'major' }}
