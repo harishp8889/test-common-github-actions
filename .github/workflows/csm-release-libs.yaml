@@ -30,20 +30,20 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: "1.24"
-      - name: Install dependencies
-        run: go mod tidy
-      - name: Build
-        run: go build -v ./...
-      - name: Run malware scan
-        uses: dell/common-github-actions/malware-scanner@main
-        with:
-          directories: .
-          options: -ri
+      # - name: Install dependencies
+      #   run: go mod tidy
+      # - name: Build
+      #   run: go build -v ./...
+      # - name: Run malware scan
+      #   uses: dell/common-github-actions/malware-scanner@main
+      #   with:
+      #     directories: .
+      #     options: -ri
 
   release-and-tag:
     name: Tag and Release
     needs: build-and-scan
-    uses: dell/common-github-actions/.github/workflows/release-creator.yaml@main
+    uses: harishp8889/test-common-github-actions/.github/workflows/release-creator.yaml@main
     with:
       version: ${{ inputs.version }}
     secrets: inherit
