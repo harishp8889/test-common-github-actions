@@ -39,7 +39,7 @@ jobs:
         if: ${{ inputs.version == 'patch' || inputs.version == 'minor' || inputs.version == 'major' }}
         run: |
           latest_version=$(curl -s https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/latest | jq -r .tag_name)
-          latest_version=$(git describe --tags $(git rev-list --tags --max-count=1))
+          # latest_version=$(git describe --tags $(git rev-list --tags --max-count=1))
           echo "MY_VAR=${latest_version}" >> $GITHUB_ENV            
           echo "latest_version=${latest_version}"
 
