@@ -61,21 +61,20 @@ func main() {
 	if err != nil {
 		fmt.Println("Error checking go license header:", err)
 	}
-	//hasShellLicense, err := checkShellLicenseHeader(isAutofixEnabled)
-	//if err != nil {
-	//	fmt.Println("Error checking shell license header:", err)
-	//}
-	//hasYamlLicense, err := checkYamlLicenseHeader(isAutofixEnabled)
-	//if err != nil {
-	//	fmt.Println("Error checking YAML license header:", err)
-	//}
-	//hasDockerFileLicense, err := checkDockerFileLicenseHeader(isAutofixEnabled)
-	//if err != nil {
-	//	fmt.Println("Error checking Dockerfile license header:", err)
-	//}
+	hasShellLicense, err := checkShellLicenseHeader(isAutofixEnabled)
+	if err != nil {
+		fmt.Println("Error checking shell license header:", err)
+	}
+	hasYamlLicense, err := checkYamlLicenseHeader(isAutofixEnabled)
+	if err != nil {
+		fmt.Println("Error checking YAML license header:", err)
+	}
+	hasDockerFileLicense, err := checkDockerFileLicenseHeader(isAutofixEnabled)
+	if err != nil {
+		fmt.Println("Error checking Dockerfile license header:", err)
+	}
 	// if any of the license headers are missing or incorrect then exit with error
-	//if !hasGoLicense || !hasShellLicense || !hasDockerFileLicense {
-	if !hasGoLicense {
+	if !hasGoLicense || !hasShellLicense || !hasDockerFileLicense || !hasYamlLicense {
 		if *isAutofixEnabled {
 			fmt.Printf("Auto-fix enabled, auto-fixed files")
 		} else {
