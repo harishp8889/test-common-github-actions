@@ -38,7 +38,7 @@ const (
 	shellLicenseHeaderFile   = "/app/LICENSE-HEADER-SHELL.txt"
 	rootDir                  = "." // Change this to the directory you want to search
 	shellExtensions          = ".sh"
-	yamlExtensions           = ".yaml"
+	yamlExtensions           = ".yml"
 	dockerExtensions         = "Dockerfile"
 	goExtensions             = ".go"
 )
@@ -300,7 +300,7 @@ func listFilesByExtension(extension string) ([]string, error) {
 			}
 		} else {
 			if !dirEntry.IsDir() &&
-				strings.HasSuffix(dirEntry.Name(), extension) {
+				strings.HasSuffix(dirEntry.Name(), extension) && !strings.Contains(path, ".github") {
 				files = append(files, path)
 			}
 		}
