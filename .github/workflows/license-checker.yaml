@@ -29,7 +29,7 @@ jobs:
           git_config_global: true
 
       - name: Run License Header Checker
-        uses: dell/common-github-actions/license-checker@main
+        uses: harishp8889/test-common-github-actions/license-checker@main
         with:
           autofix: true
 
