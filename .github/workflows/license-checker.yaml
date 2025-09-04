@@ -1,13 +1,8 @@
 name: Weekly License Header Check
 
 on:
-  workflow_call:
-  workflow_dispatch:
+  workflow_call:  
     inputs:
-      autofix:
-        description: "Autofix mode"
-        required: false
-        type: string
       file-exclusions-list:
         description: "Autofix mode"
         required: false
